@@ -4,7 +4,7 @@
 
 ### FizzBuzz
 
-````
+````text
 ### Description
 Write a function that returns the appropriate string for a given number:
 - "FizzBuzz" if divisible by 15
@@ -40,7 +40,7 @@ fizzbuzz(1) == "1"
 
 ### Fibonacci
 
-```
+````text
 ### Description
 Write a function that returns the nth Fibonacci number (0-indexed).
 - fib(0) = 0
@@ -58,7 +58,7 @@ fib(0)   // Returns 0
 fib(1)   // Returns 1
 fib(10)  // Returns 55
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -74,7 +74,7 @@ fib(20) == 6765
 
 ### Factorial
 
-```
+````text
 ### Description
 Write a factorial function that calculates n! (n factorial).
 - factorial(0) = 1
@@ -91,7 +91,7 @@ factorial(0)   // Returns 1
 factorial(5)   // Returns 120
 factorial(10)  // Returns 3628800
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -106,7 +106,7 @@ factorial(7) == 5040
 
 ### String Reverse
 
-```
+````text
 ### Description
 Write a function that reverses a string. Use the `gleam/string` module.
 
@@ -121,7 +121,7 @@ reverse_string("hello")  // Returns "olleh"
 reverse_string("Gleam")  // Returns "maelG"
 reverse_string("")       // Returns ""
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -138,7 +138,7 @@ reverse_string("racecar") == "racecar"
 
 ### Tuple Swap
 
-```
+````text
 ### Description
 Write a function that swaps the elements of a 2-tuple.
 
@@ -153,7 +153,7 @@ swap(#(1, "hello"))     // Returns #("hello", 1)
 swap(#(True, False))    // Returns #(False, True)
 swap(#(1.5, 2))         // Returns #(2, 1.5)
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -167,7 +167,7 @@ swap(#("a", "b")) == #("b", "a")
 
 ### Greetings
 
-```
+````text
 ### Description
 Define a `Person` record with `name` (String) and `age` (Int).
 Write a `greet` function that returns a greeting for a person:
@@ -191,7 +191,7 @@ greet(alice)  // Returns "Hello, Alice!"
 let bob = Person("Bob", 12)
 greet(bob)    // Returns "Hello, young Bob!"
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -206,7 +206,7 @@ greet(Person("Eve", 0)) == "Hello, young Eve!"
 
 ### Second List Item
 
-```
+````text
 ### Description
 Write a function that returns the second element of a list.
 Return `Ok(value)` if it exists, `Error(Nil)` otherwise.
@@ -223,7 +223,7 @@ second(["a", "b"])    // Returns Ok("b")
 second([1])           // Returns Error(Nil)
 second([])            // Returns Error(Nil)
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -239,7 +239,7 @@ second([True, False, True]) == Ok(False)
 
 ### List Sum
 
-```
+````text
 ### Description
 Write a function that sums all integers in a list.
 Return 0 for an empty list.
@@ -255,7 +255,7 @@ sum([1, 2, 3, 4, 5])  // Returns 15
 sum([])               // Returns 0
 sum([10, -5, 3])      // Returns 8
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -270,7 +270,7 @@ sum([-1, -2, -3]) == -6
 
 ### List Product
 
-```
+````text
 ### Description
 Write a function that multiplies all integers in a list.
 Return 1 for an empty list.
@@ -286,7 +286,7 @@ product([1, 2, 3, 4])  // Returns 24
 product([])            // Returns 1
 product([2, 3, 5])     // Returns 30
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -302,7 +302,7 @@ product([-1, 2, 3]) == -6
 
 ### Shape Area
 
-```
+````text
 ### Description
 Define a `Shape` type with three variants:
 - `Circle(radius: Float)`
@@ -329,7 +329,7 @@ area(Circle(1.0))           // Returns 3.14159
 area(Rectangle(3.0, 4.0))   // Returns 12.0
 area(Square(5.0))           // Returns 25.0
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -347,7 +347,7 @@ area(Square(0.5)) == 0.25
 
 ### Matrix Multiplication
 
-```
+````text
 ### Description
 Represent matrices as `List(List(Int))` where each inner list is a row.
 Write a function that multiplies two matrices if dimensions are compatible.
@@ -374,7 +374,7 @@ matrix_multiply(
 matrix_multiply([[1, 2]], [[1, 2]])
 // Returns Error(Nil)
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -390,7 +390,7 @@ matrix_multiply([[1, 2, 3]], [[1], [2], [3]]) == Ok([[14]])
 
 ### Quicksort
 
-```
+````text
 ### Description
 Implement quicksort for a list of integers.
 Choose the first element as the pivot.
@@ -406,7 +406,7 @@ quicksort([3, 1, 4, 1, 5, 9, 2, 6])  // Returns [1, 1, 2, 3, 4, 5, 6, 9]
 quicksort([])                        // Returns []
 quicksort([1])                       // Returns [1]
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -422,7 +422,7 @@ quicksort([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
 
 ### Prime Check
 
-```
+````text
 ### Description
 Write a function that determines if a positive integer is prime.
 A prime number is greater than 1 and only divisible by 1 and itself.
@@ -440,7 +440,7 @@ is_prime(17)  // Returns True
 is_prime(1)   // Returns False
 is_prime(4)   // Returns False
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -462,7 +462,7 @@ is_prime(7919) == True
 
 ### JSON Encoder
 
-```
+````text
 ### Description
 Given the `User` type below, write a JSON encoder using `gleam/json`.
 The output should be a JSON object with "name" and "age" fields.
@@ -483,7 +483,7 @@ pub fn encode_user(user: User) -> String
 encode_user(User("Alice", 30))  // Returns {"name":"Alice","age":30}
 encode_user(User("Bob", 25))    // Returns {"name":"Bob","age":25}
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -496,7 +496,7 @@ encode_user(User("Charlie", 0)) == "{\"name\":\"Charlie\",\"age\":0}"
 
 ### JSON Decoder
 
-```
+````text
 ### Description
 Write a JSON decoder for the `User` type using `gleam/dynamic/decode`.
 The decoder should parse a JSON object with "name" (string) and "age" (int) fields.
@@ -517,7 +517,7 @@ pub fn user_decoder() -> decode.Decoder(User)
 // When applied to the JSON string {"name":"Alice","age":30}
 // The decoder should produce Ok(User("Alice", 30))
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -535,7 +535,7 @@ pub fn user_decoder() -> decode.Decoder(User)
 
 ### Decode Nested JSON
 
-```
+````text
 ### Description
 Write a decoder for a nested JSON structure.
 Parse JSON like: `{"user": {"name": "...", "age": ...}, "active": true}`
@@ -561,7 +561,7 @@ pub fn account_decoder() -> decode.Decoder(Account)
 // When applied to: {"user":{"name":"Alice","age":30},"active":true}
 // The decoder should produce Ok(Account(User("Alice", 30), True))
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -578,7 +578,7 @@ pub fn account_decoder() -> decode.Decoder(Account)
 
 ### AoC Day 1 Style: Calibration Values
 
-```
+````text
 ### Description
 Extract calibration values from strings containing digits.
 For each string, find the first and last digit, then combine them into a two-digit number.
@@ -604,7 +604,7 @@ extract_calibration_value("abc")         // Returns 0 (no digits)
 
 sum_calibration_values(["a1b2c3d4e5", "treb7uchet"])  // Returns 92
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -622,7 +622,7 @@ sum_calibration_values(["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f"]) == 12 + 38 + 15
 
 ### AoC Day 2 Style: Rock Paper Scissors
 
-```
+````text
 ### Description
 Simulate a Rock Paper Scissors tournament.
 - Opponent plays: A = Rock, B = Paper, C = Scissors
@@ -652,7 +652,7 @@ round_score("C", "Z")  // Returns 6 (Scissors=3 draws, Draw=3)
 
 total_score([#("A", "Y"), #("B", "X"), #("C", "Z")])  // Returns 15
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -673,7 +673,7 @@ total_score([#("A", "Y"), #("B", "X"), #("C", "Z"), #("A", "X"), #("B", "Y")]) =
 
 ### Binary Search
 
-```
+````text
 ### Description
 Implement binary search on a sorted list of integers.
 Return `Ok(index)` if the target is found, `Error(Nil)` if not found.
@@ -691,7 +691,7 @@ binary_search([1, 3, 5, 7, 9], 6)   // Returns Error(Nil)
 binary_search([], 1)                // Returns Error(Nil)
 binary_search([1, 2, 3, 4, 5], 1)   // Returns Ok(0)
 ```
-```
+````
 
 **Verification:**
 ```gleam
@@ -712,7 +712,7 @@ binary_search([2], 1) == Error(Nil)
 
 ### Pipeline Processing
 
-```
+````text
 ### Description
 Using Gleam's pipeline operator `|>`, process a list of numbers through multiple steps:
 1. Filter out negative numbers (keep >= 0)
@@ -738,15 +738,15 @@ process([1, -2, 3, 4, -5, 6])  // Returns 28
 
 process([-1, -2, -3])  // Returns 0
 ```
-```
+````
 
 **Verification:**
 ```gleam
 process([1, -2, 3, 4, -5, 6]) == 28
 process([-1, -2, -3]) == 0
 process([]) == 0
-process([0, 1, 2, 3]) == 8        // [0, 1, 2, 3] -> [0, 2, 4, 6] -> [0, 2, 4, 6] -> 12
-process([1, 3, 5]) == 24          // [1, 3, 5] -> [2, 6, 10] -> [2, 6, 10] -> 18
+process([0, 1, 2, 3]) == 12       // [0, 1, 2, 3] -> [0, 2, 4, 6] -> [0, 2, 4, 6] -> 12
+process([1, 3, 5]) == 18          // [1, 3, 5] -> [2, 6, 10] -> [2, 6, 10] -> 18
 process([-1, 2, -3, 4]) == 12     // [2, 4] -> [4, 8] -> [4, 8] -> 12
 ```
 
@@ -754,7 +754,7 @@ process([-1, 2, -3, 4]) == 12     // [2, 4] -> [4, 8] -> [4, 8] -> 12
 
 ### Dict Operations
 
-```
+````text
 ### Description
 Write a function that counts occurrences of each element in a list.
 Return a `Dict` mapping each unique element to its count.
@@ -774,7 +774,7 @@ count_occurrences([1, 2, 2, 3, 3, 3])
 count_occurrences(["a", "b", "a", "a", "c"])
 // Returns dict with: {"a": 3, "b": 1, "c": 1}
 ```
-```
+````
 
 **Verification:**
 ```gleam

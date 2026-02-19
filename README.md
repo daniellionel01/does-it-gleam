@@ -10,8 +10,6 @@ However a concise and useful overview of the ability of LLMs to solve small prob
 
 Models are going to be faced with multiple coding challenges with easily verifiable outputs (numbers or strings).
 
-To get a deeper understanding of the models we are testing, we will run the same coding challenges for more popular programming languages, guaranteed to be well understood by all LLMs. Those will be: TypeScript (via Node), Python, Go.
-
 Models are going to have multiple attempts.
 
 Instead of only accepting 1-shotted solutions, each model will have 3 attempts and will be given the compiler output to refine their code if their solution is not correct.

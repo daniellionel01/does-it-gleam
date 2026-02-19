@@ -51,24 +51,24 @@ Models we are testing:
 
 | Release date | Name | Provider |
 | --- | --- | --- |
-| Feb 4, 2026 | [claude-opus-4.6](https://openrouter.ai/anthropic/claude-opus-4.6) | anthropic |
-| Feb 17, 2026 | [claude-sonnet-4.6](https://openrouter.ai/anthropic/claude-sonnet-4.6) | anthropic |
-| Nov 24, 2025 | [claude-opus-4.5](https://openrouter.ai/anthropic/claude-opus-4.5) | anthropic |
-| Sep 29, 2025 | [claude-sonnet-4.5](https://openrouter.ai/anthropic/claude-sonnet-4.5) | anthropic |
-| Nov 18, 2025 | [gemini-3-pro-preview](https://openrouter.ai/google/gemini-3-pro-preview) | google |
-| Dec 17, 2025 | [gemini-3-flash-preview](https://openrouter.ai/google/gemini-3-flash-preview) | google |
-| Jun 17, 2025 | [gemini-2.5-pro](https://openrouter.ai/google/gemini-2.5-pro) | google |
-| Jun 17, 2025 | [gemini-2.5-flash](https://openrouter.ai/google/gemini-2.5-flash) | google |
-| Feb 11, 2026 | [glm-5](https://openrouter.ai/z-ai/glm-5) | z-ai |
-| Dec 22, 2025 | [glm-4.7](https://openrouter.ai/z-ai/glm-4.7) | z-ai |
-| Jan 27, 2026 | [kimi-k2.5](https://openrouter.ai/moonshotai/kimi-k2.5) | moonshotai |
-| Nov 6, 2025 | [kimi-k2-thinking](https://openrouter.ai/moonshotai/kimi-k2-thinking) | moonshotai |
-| Feb 12, 2026 | [minimax-m2.5](https://openrouter.ai/minimax/minimax-m2.5) | minimax |
-| Dec 23, 2025 | [minimax-m2.1](https://openrouter.ai/minimax/minimax-m2.1) | minimax |
-| Dec 1, 2025 | [deepseek-v3.2](https://openrouter.ai/deepseek/deepseek-v3.2) | deepseek |
-| Jan 20, 2025 | [deepseek-r1](https://openrouter.ai/deepseek/deepseek-r1) | deepseek |
-| Jan 14, 2026 | [gpt-5.2-codex](https://openrouter.ai/openai/gpt-5.2-codex) | openai |
-| Dec 10, 2025 | [gpt-5.2](https://openrouter.ai/openai/gpt-5.2) | openai |
+| Feb 4, 2026 | [claude-opus-4.6](https://openrouter.ai/anthropic/claude-opus-4.6) | [anthropic](https://www.anthropic.com/) |
+| Feb 17, 2026 | [claude-sonnet-4.6](https://openrouter.ai/anthropic/claude-sonnet-4.6) | [anthropic](https://www.anthropic.com/) |
+| Nov 24, 2025 | [claude-opus-4.5](https://openrouter.ai/anthropic/claude-opus-4.5) | [anthropic](https://www.anthropic.com/) |
+| Sep 29, 2025 | [claude-sonnet-4.5](https://openrouter.ai/anthropic/claude-sonnet-4.5) | [anthropic](https://www.anthropic.com/) |
+| Nov 18, 2025 | [gemini-3-pro-preview](https://openrouter.ai/google/gemini-3-pro-preview) | [google](https://ai.google.dev/) |
+| Dec 17, 2025 | [gemini-3-flash-preview](https://openrouter.ai/google/gemini-3-flash-preview) | [google](https://ai.google.dev/) |
+| Jun 17, 2025 | [gemini-2.5-pro](https://openrouter.ai/google/gemini-2.5-pro) | [google](https://ai.google.dev/) |
+| Jun 17, 2025 | [gemini-2.5-flash](https://openrouter.ai/google/gemini-2.5-flash) | [google](https://ai.google.dev/) |
+| Feb 11, 2026 | [glm-5](https://openrouter.ai/z-ai/glm-5) | [z-ai](https://www.z.ai/) |
+| Dec 22, 2025 | [glm-4.7](https://openrouter.ai/z-ai/glm-4.7) | [z-ai](https://www.z.ai/) |
+| Jan 27, 2026 | [kimi-k2.5](https://openrouter.ai/moonshotai/kimi-k2.5) | [moonshotai](https://www.moonshot.cn/) |
+| Nov 6, 2025 | [kimi-k2-thinking](https://openrouter.ai/moonshotai/kimi-k2-thinking) | [moonshotai](https://www.moonshot.cn/) |
+| Feb 12, 2026 | [minimax-m2.5](https://openrouter.ai/minimax/minimax-m2.5) | [minimax](https://www.minimaxi.com/) |
+| Dec 23, 2025 | [minimax-m2.1](https://openrouter.ai/minimax/minimax-m2.1) | [minimax](https://www.minimaxi.com/) |
+| Dec 1, 2025 | [deepseek-v3.2](https://openrouter.ai/deepseek/deepseek-v3.2) | [deepseek](https://www.deepseek.com/) |
+| Jan 20, 2025 | [deepseek-r1](https://openrouter.ai/deepseek/deepseek-r1) | [deepseek](https://www.deepseek.com/) |
+| Jan 14, 2026 | [gpt-5.2-codex](https://openrouter.ai/openai/gpt-5.2-codex) | [openai](https://openai.com/) |
+| Dec 10, 2025 | [gpt-5.2](https://openrouter.ai/openai/gpt-5.2) | [openai](https://openai.com/) |
 
 ## Visualizations
 

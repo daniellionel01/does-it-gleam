@@ -39,6 +39,11 @@ Even if a model is not able to produce correct Gleam code from scratch, your exp
 - Write a test 
 - FizzBuzz
 - Write a fibonacci function and output `fib(10)`
+- JSON de- and encoder
+- Working with records
+- Working with tuples
+- List patterns
+- Advent of Code
 
 ## Models
 
@@ -79,3 +84,7 @@ This project is heavily vibe coded regarding the collection of scripts that run 
 - Score vs date of release
 - Score vs Model
 - Closed vs Open weight models
+
+## Inspiration
+
+This project was also inspired by https://github.com/Tencent-Hunyuan/AutoCodeBenchmark!

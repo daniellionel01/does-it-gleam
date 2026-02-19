@@ -2,21 +2,43 @@
 
 Inspired by the [Convex LLM Leaderboard](https://www.convex.dev/llm-leaderboard/) I thought it would be cool to do the same for Gleam.
 
-I started a more ambitious project in the past, but archived it, due to the lack of personal necessity (https://github.com/daniellionel01/gleam-llm).
+I started a more ambitious project in the past, but archived it, due to the lack of personal need for it (https://github.com/daniellionel01/gleam-llm).
 
 However a concise and useful overview of the ability of LLMs to solve small problems using Gleam.
 
 ## Methodology
 
-Models are going to be faced with 2 challenges: Knowledge about the Gleam programming language and small coding challenges.
+Models are going to be faced with multiple coding challenges with easily verifiable outputs (numbers or strings).
 
 To get a deeper understanding of the models we are testing, we will run the same coding challenges for more popular programming languages, guaranteed to be well understood by all LLMs. Those will be: TypeScript (via Node), Python, Go.
 
 Models are going to have multiple attempts.
 
-In the coding challenges, models will have 3 attempts and will be given the compiler output to refine their code.
+Instead of only accepting 1-shotted solutions, each model will have 3 attempts and will be given the compiler output to refine their code if their solution is not correct.
+
+We will run each model 10x on each test and measure their standard deviation.
 
 The models will have no access to external Tools, such as Web Browsing.
+
+A final 0-100 score will be averaged for each model.
+
+## Concessions
+
+To manage expectations, it is vital to understand that leetcode style coding questions are not the full picture of how productive a LLM will be in a given programming language. There is a lot missing in this simplified test:
+- Knowledge about best practices, anti patterns and design choices.
+- Knowledge about the ecosystem.
+- Tooling around documentation and MCP servers.
+- Deprecated and new features in recent releases (due to knowledge cutoff).
+- ...
+
+Even if a model is not able to produce correct Gleam code from scratch, your experience in the real world in an existing codebase will most likely differ a lot. In a different context with Claude Code, existing code and access to web browsing, I expect any LLM to at least be sort of viable in a Gleam codebase.
+
+## Coding Challenges
+
+- Matrix Multiplication
+- Write a test 
+- FizzBuzz
+- Write a fibonacci function and output `fib(10)`
 
 ## Models
 
@@ -26,12 +48,28 @@ Temperature for all models will be set to `0.1`.
 We will test a wide range of models from past years and multiple providers.
 
 Models we are testing:
-- https://openrouter.ai/anthropic/claude-sonnet-4.6 ()
-- https://openrouter.ai/anthropic/claude-opus-4.6
-- https://openrouter.ai/z-ai/glm-5
-- https://openrouter.ai/z-ai/glm-4.7
-- https://openrouter.ai/moonshotai/kimi-k2.5
-- https://openrouter.ai/moonshotai/kimi-k2-thinking
-- https://openrouter.ai/minimax/minimax-m2.5
-- https://openrouter.ai/minimax/minimax-m2.1
-- https://openrouter.ai/openai/gpt-5.2-codex
+- https://openrouter.ai/anthropic/claude-opus-4.6 (Feb 4, 2026)
+- https://openrouter.ai/anthropic/claude-sonnet-4.6 (Feb 17, 2026)
+- https://openrouter.ai/anthropic/claude-opus-4.5 (Nov 24, 2025)
+- https://openrouter.ai/anthropic/claude-sonnet-4.5 (Sep 29, 2025)
+- https://openrouter.ai/google/gemini-3-pro-preview (Nov 18, 2025)
+- https://openrouter.ai/google/gemini-3-flash-preview (Dec 17, 2025)
+- https://openrouter.ai/google/gemini-2.5-pro (Jun 17, 2025)
+- https://openrouter.ai/google/gemini-2.5-flash (Jun 17, 2025)
+- https://openrouter.ai/z-ai/glm-5 (Feb 11, 2026)
+- https://openrouter.ai/z-ai/glm-4.7 (Dec 22, 2025)
+- https://openrouter.ai/moonshotai/kimi-k2.5 (Jan 27, 2026)
+- https://openrouter.ai/moonshotai/kimi-k2-thinking (Nov 6, 2025)
+- https://openrouter.ai/minimax/minimax-m2.5 (Feb 12, 2026)
+- https://openrouter.ai/minimax/minimax-m2.1 (Dec 23, 2025)
+- https://openrouter.ai/deepseek/deepseek-v3.2 (Dec 1, 2025)
+- https://openrouter.ai/deepseek/deepseek-r1 (Jan 20, 2025)
+- https://openrouter.ai/openai/gpt-5.2-codex (Jan 14, 2026)
+- https://openrouter.ai/openai/gpt-5.2 (Dec 10, 2025)
+
+## Visualizations
+
+- Table (by provider / date)
+- Score vs date of release
+- Score vs Model
+- Closed vs Open weight models

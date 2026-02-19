@@ -4,7 +4,7 @@
 
 ### FizzBuzz
 
-```
+````
 ### Description
 Write a function that returns the appropriate string for a given number:
 - "FizzBuzz" if divisible by 15
@@ -24,7 +24,7 @@ fizzbuzz(5)   // Returns "Buzz"
 fizzbuzz(15)  // Returns "FizzBuzz"
 fizzbuzz(7)   // Returns "7"
 ```
-```
+````
 
 **Verification:**
 ```gleam

@@ -59,8 +59,8 @@ Models we are testing:
 | Dec 17, 2025 | [gemini-3-flash-preview](https://openrouter.ai/google/gemini-3-flash-preview) | [google](https://ai.google.dev/) |
 | Jun 17, 2025 | [gemini-2.5-pro](https://openrouter.ai/google/gemini-2.5-pro) | [google](https://ai.google.dev/) |
 | Jun 17, 2025 | [gemini-2.5-flash](https://openrouter.ai/google/gemini-2.5-flash) | [google](https://ai.google.dev/) |
-| Feb 11, 2026 | [glm-5](https://openrouter.ai/z-ai/glm-5) | [z-ai](https://www.z.ai/) |
-| Dec 22, 2025 | [glm-4.7](https://openrouter.ai/z-ai/glm-4.7) | [z-ai](https://www.z.ai/) |
+| Feb 11, 2026 | [glm-5](https://openrouter.ai/z-ai/glm-5) | [z-ai](https://z.ai/) |
+| Dec 22, 2025 | [glm-4.7](https://openrouter.ai/z-ai/glm-4.7) | [z-ai](https://z.ai/) |
 | Jan 27, 2026 | [kimi-k2.5](https://openrouter.ai/moonshotai/kimi-k2.5) | [moonshotai](https://www.moonshot.cn/) |
 | Nov 6, 2025 | [kimi-k2-thinking](https://openrouter.ai/moonshotai/kimi-k2-thinking) | [moonshotai](https://www.moonshot.cn/) |
 | Feb 12, 2026 | [minimax-m2.5](https://openrouter.ai/minimax/minimax-m2.5) | [minimax](https://www.minimaxi.com/) |

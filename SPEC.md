@@ -1,3 +1,3 @@
 # Specification
 
-We
+We need a collection of scripts

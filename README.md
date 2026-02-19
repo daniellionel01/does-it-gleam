@@ -48,24 +48,27 @@ Temperature for all models will be set to `0.1`.
 We will test a wide range of models from past years and multiple providers.
 
 Models we are testing:
-- https://openrouter.ai/anthropic/claude-opus-4.6 (Feb 4, 2026)
-- https://openrouter.ai/anthropic/claude-sonnet-4.6 (Feb 17, 2026)
-- https://openrouter.ai/anthropic/claude-opus-4.5 (Nov 24, 2025)
-- https://openrouter.ai/anthropic/claude-sonnet-4.5 (Sep 29, 2025)
-- https://openrouter.ai/google/gemini-3-pro-preview (Nov 18, 2025)
-- https://openrouter.ai/google/gemini-3-flash-preview (Dec 17, 2025)
-- https://openrouter.ai/google/gemini-2.5-pro (Jun 17, 2025)
-- https://openrouter.ai/google/gemini-2.5-flash (Jun 17, 2025)
-- https://openrouter.ai/z-ai/glm-5 (Feb 11, 2026)
-- https://openrouter.ai/z-ai/glm-4.7 (Dec 22, 2025)
-- https://openrouter.ai/moonshotai/kimi-k2.5 (Jan 27, 2026)
-- https://openrouter.ai/moonshotai/kimi-k2-thinking (Nov 6, 2025)
-- https://openrouter.ai/minimax/minimax-m2.5 (Feb 12, 2026)
-- https://openrouter.ai/minimax/minimax-m2.1 (Dec 23, 2025)
-- https://openrouter.ai/deepseek/deepseek-v3.2 (Dec 1, 2025)
-- https://openrouter.ai/deepseek/deepseek-r1 (Jan 20, 2025)
-- https://openrouter.ai/openai/gpt-5.2-codex (Jan 14, 2026)
-- https://openrouter.ai/openai/gpt-5.2 (Dec 10, 2025)
+
+| Name | Provider | OpenRouter | Release date |
+| --- | --- | --- | --- |
+| claude-opus-4.6 | anthropic | https://openrouter.ai/anthropic/claude-opus-4.6 | Feb 4, 2026 |
+| claude-sonnet-4.6 | anthropic | https://openrouter.ai/anthropic/claude-sonnet-4.6 | Feb 17, 2026 |
+| claude-opus-4.5 | anthropic | https://openrouter.ai/anthropic/claude-opus-4.5 | Nov 24, 2025 |
+| claude-sonnet-4.5 | anthropic | https://openrouter.ai/anthropic/claude-sonnet-4.5 | Sep 29, 2025 |
+| gemini-3-pro-preview | google | https://openrouter.ai/google/gemini-3-pro-preview | Nov 18, 2025 |
+| gemini-3-flash-preview | google | https://openrouter.ai/google/gemini-3-flash-preview | Dec 17, 2025 |
+| gemini-2.5-pro | google | https://openrouter.ai/google/gemini-2.5-pro | Jun 17, 2025 |
+| gemini-2.5-flash | google | https://openrouter.ai/google/gemini-2.5-flash | Jun 17, 2025 |
+| glm-5 | z-ai | https://openrouter.ai/z-ai/glm-5 | Feb 11, 2026 |
+| glm-4.7 | z-ai | https://openrouter.ai/z-ai/glm-4.7 | Dec 22, 2025 |
+| kimi-k2.5 | moonshotai | https://openrouter.ai/moonshotai/kimi-k2.5 | Jan 27, 2026 |
+| kimi-k2-thinking | moonshotai | https://openrouter.ai/moonshotai/kimi-k2-thinking | Nov 6, 2025 |
+| minimax-m2.5 | minimax | https://openrouter.ai/minimax/minimax-m2.5 | Feb 12, 2026 |
+| minimax-m2.1 | minimax | https://openrouter.ai/minimax/minimax-m2.1 | Dec 23, 2025 |
+| deepseek-v3.2 | deepseek | https://openrouter.ai/deepseek/deepseek-v3.2 | Dec 1, 2025 |
+| deepseek-r1 | deepseek | https://openrouter.ai/deepseek/deepseek-r1 | Jan 20, 2025 |
+| gpt-5.2-codex | openai | https://openrouter.ai/openai/gpt-5.2-codex | Jan 14, 2026 |
+| gpt-5.2 | openai | https://openrouter.ai/openai/gpt-5.2 | Dec 10, 2025 |
 
 ## Visualizations
 

@@ -43,7 +43,6 @@ Even if a model is not able to produce correct Gleam code from scratch, your exp
 ## Models
 
 We will be using [OpenRouter](https://openrouter.ai/) for accessing the models.
-Temperature for all models will be set to `0.1`.
 
 We will test a wide range of models from past years and multiple providers.
 
@@ -69,6 +68,10 @@ Models we are testing:
 | [deepseek-r1](https://openrouter.ai/deepseek/deepseek-r1) | [deepseek](https://www.deepseek.com/) | Jan 20, 2025 |
 | [gpt-5.2-codex](https://openrouter.ai/openai/gpt-5.2-codex) | [openai](https://openai.com/) | Jan 14, 2026 |
 | [gpt-5.2](https://openrouter.ai/openai/gpt-5.2) | [openai](https://openai.com/) | Dec 10, 2025 |
+
+## Development
+
+This project is heavily vibe coded regarding the collection of scripts that run the actual tests. An initial draft of this "engine" is defined in [SPEC.md](./SPEC.md).
 
 ## Visualizations
 

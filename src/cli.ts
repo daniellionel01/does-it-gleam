@@ -3,7 +3,7 @@
 import { Command } from "commander";
 import { loadEnv } from "./env.ts";
 import { loadAllConfig } from "./config.ts";
-import { runSuite } from "./runner.ts";
+import { planSuite, runSuite } from "./runner.ts";
 import { buildReport } from "./report.ts";
 import { inspectCache } from "./inspect.ts";
 
@@ -19,6 +19,7 @@ program.addHelpText(
   "after",
   `
 Examples:
+  bun src/cli.ts run --dry-run
   bun src/cli.ts run --model openai/gpt-5.2 --challenge fizzbuzz --runs 1 --concurrency 1
   bun src/cli.ts inspect --cost
   bun src/cli.ts report
@@ -34,8 +35,8 @@ program
   .option("--attempts <n>", "Max attempts per run", (v) => Number(v))
   .option("--concurrency <n>", "Parallel workers", (v) => Number(v))
   .option("--temperature <n>", "LLM temperature", (v) => Number(v))
+  .option("--dry-run", "Print planned jobs and exit")
   .action(async (opts) => {
-    loadEnv();
     const global = program.opts();
     const cfg = await loadAllConfig(global.configDir);
 
@@ -48,6 +49,24 @@ program
     })) {
       if (typeof v === "number" && Number.isFinite(v)) overrides[k] = v;
     }
+
+    if (opts.dryRun) {
+      await planSuite({
+        cfg,
+        artifactsDir: global.artifactsDir,
+        filterModelId: opts.model,
+        filterChallengeId: opts.challenge,
+        overrides: {
+          runs: overrides.runs,
+          attempts: overrides.attempts,
+          concurrency: overrides.concurrency,
+          temperature: overrides.temperature
+        }
+      });
+      return;
+    }
+
+    loadEnv();
 
     await runSuite({
       cfg,

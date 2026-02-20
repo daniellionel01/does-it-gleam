@@ -1,0 +1,19 @@
+{
+  "name": "does-it-gleam",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "cli": "bun src/cli.ts",
+    "run": "bun src/cli.ts run",
+    "report": "bun src/cli.ts report",
+    "inspect": "bun src/cli.ts inspect"
+  },
+  "dependencies": {
+    "commander": "^13.0.0",
+    "dotenv": "^16.4.7",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "bun-types": "^1.0.0"
+  }
+}

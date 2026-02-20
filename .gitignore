@@ -1,6 +1,10 @@
 *.beam
 *.ez
 /build
+/artifacts
+node_modules/
+bun.lock
+.DS_Store
 erl_crash.dump
 
 *.env

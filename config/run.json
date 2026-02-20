@@ -1,0 +1,8 @@
+{
+  "runs": 10,
+  "attempts": 3,
+  "concurrency": 2,
+  "temperature": 0.2,
+  "openrouterBaseUrl": "https://openrouter.ai/api/v1",
+  "requestTimeoutMs": 120000
+}

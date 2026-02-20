@@ -15,6 +15,16 @@ program
   .option("--config-dir <dir>", "Config directory", "config")
   .option("--artifacts-dir <dir>", "Artifacts directory", "artifacts");
 
+program.addHelpText(
+  "after",
+  `
+Examples:
+  bun src/cli.ts run --model openai/gpt-5.2 --challenge fizzbuzz --runs 1 --concurrency 1
+  bun src/cli.ts inspect --cost
+  bun src/cli.ts report
+`
+);
+
 program
   .command("run")
   .description("Run suite (resumable)")
@@ -65,11 +75,12 @@ program
 
 program
   .command("inspect")
-  .description("Show cached progress")
-  .action(async () => {
+  .description("Show cached progress (use --cost for spend)")
+  .option("--cost", "Show cost/tokens so far (total + per model)")
+  .action(async (opts) => {
     const global = program.opts();
     const cfg = await loadAllConfig(global.configDir);
-    await inspectCache({ cfg, artifactsDir: global.artifactsDir });
+    await inspectCache({ cfg, artifactsDir: global.artifactsDir, showCost: Boolean(opts.cost) });
   });
 
 await program.parseAsync(process.argv);

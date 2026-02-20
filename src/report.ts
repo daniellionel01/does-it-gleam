@@ -8,6 +8,7 @@ type ResultJson = {
   challengeId: string;
   runIndex: number;
   passed: boolean;
+  attemptsUsed?: number;
   usage?: {
     totalPromptTokens?: number;
     totalCompletionTokens?: number;
@@ -77,11 +78,19 @@ function buildSummary(cfg: AllConfig, results: ResultJson[]) {
         passes: number;
         fails: number;
         totalTokens: number;
+        attemptHistogram: Record<string, number>;
+        failCount: number;
+        firstTryRate: number;
+        avgAttemptsOnPass: number;
       }
     > = {};
 
     let scoreParts: number[] = [];
     let totalTokens = 0;
+    let modelCompletedRuns = 0;
+    let modelFirstTryPasses = 0;
+    let modelPasses = 0;
+    let modelAttemptsOnPassSum = 0;
     for (const c of cfg.challenges) {
       const key = `${m.id}::${c.id}`;
       const arr = (byKey.get(key) ?? []).sort((a, b) => a.runIndex - b.runIndex);
@@ -92,6 +101,31 @@ function buildSummary(cfg: AllConfig, results: ResultJson[]) {
       const sd = stddevPopulation(xs);
       const tok = arr.reduce((acc, r) => acc + (r.usage?.totalTokens ?? 0), 0);
       totalTokens += tok;
+
+      const attemptHistogram: Record<string, number> = {};
+      let attemptsOnPassSum = 0;
+      let firstTryPasses = 0;
+      let failCount = 0;
+      for (const r of arr) {
+        if (!r.passed) {
+          failCount++;
+          continue;
+        }
+        if (typeof r.attemptsUsed === "number" && Number.isFinite(r.attemptsUsed)) {
+          const k = String(r.attemptsUsed);
+          attemptHistogram[k] = (attemptHistogram[k] ?? 0) + 1;
+          attemptsOnPassSum += r.attemptsUsed;
+          if (r.attemptsUsed === 1) firstTryPasses++;
+        }
+      }
+      const avgAttemptsOnPass = passes === 0 ? 0 : attemptsOnPassSum / passes;
+      const firstTryRate = xs.length === 0 ? 0 : firstTryPasses / xs.length;
+
+      modelCompletedRuns += xs.length;
+      modelFirstTryPasses += firstTryPasses;
+      modelPasses += passes;
+      modelAttemptsOnPassSum += attemptsOnPassSum;
+
       perChallenge[c.id] = {
         completedRuns: xs.length,
         expectedRuns: cfg.run.runs,
@@ -99,12 +133,19 @@ function buildSummary(cfg: AllConfig, results: ResultJson[]) {
         stddev: sd,
         passes,
         fails,
-        totalTokens: tok
+        totalTokens: tok,
+        attemptHistogram,
+        failCount,
+        firstTryRate,
+        avgAttemptsOnPass
       };
       // Use per-challenge pass rate based on completed runs; report completeness separately.
       scoreParts.push(passRate);
     }
     const score = scoreParts.length === 0 ? 0 : (scoreParts.reduce((a, b) => a + b, 0) / scoreParts.length) * 100;
+
+    const modelFirstTryRate = modelCompletedRuns === 0 ? 0 : modelFirstTryPasses / modelCompletedRuns;
+    const modelAvgAttemptsOnPass = modelPasses === 0 ? 0 : modelAttemptsOnPassSum / modelPasses;
 
     return {
       id: m.id,
@@ -112,6 +153,8 @@ function buildSummary(cfg: AllConfig, results: ResultJson[]) {
       provider: m.provider ?? null,
       releaseDate: m.releaseDate ?? null,
       score,
+      firstTryRate: modelFirstTryRate,
+      avgAttemptsOnPass: modelAvgAttemptsOnPass,
       totalTokens,
       challenges: perChallenge
     };
@@ -141,15 +184,21 @@ function renderHtml(summary: any): string {
     h1 { margin:0 0 6px; font-size:18px; }
     .meta { color:var(--muted); }
     main { padding:16px 20px 40px; }
-    table { width:100%; border-collapse:collapse; background:rgba(17,26,51,0.7); border:1px solid var(--line); }
-    th, td { padding:10px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    .tableWrap { overflow:auto; border:1px solid var(--line); border-radius:12px; background:rgba(17,26,51,0.45); }
+    table { width:max-content; min-width:100%; border-collapse:collapse; background:transparent; }
+    th, td { padding:10px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; white-space:nowrap; }
     th { position:sticky; top:0; background:rgba(17,26,51,0.95); z-index:1; }
+    th:first-child, td:first-child { position:sticky; left:0; background:rgba(17,26,51,0.95); }
+    th:first-child { z-index:2; }
     .muted { color:var(--muted); }
     .pill { display:inline-block; padding:2px 8px; border:1px solid var(--line); border-radius:999px; }
     .good { color:var(--good); }
     .bad { color:var(--bad); }
     .row { display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; }
     .card { background:rgba(17,26,51,0.7); border:1px solid var(--line); border-radius:12px; padding:12px 12px; }
+    .modelCell { white-space:normal; min-width:320px; max-width:420px; }
+    .cellTop { font-size:13px; }
+    .cellSub { font-size:12px; }
   </style>
 </head>
 <body>
@@ -163,7 +212,7 @@ function renderHtml(summary: any): string {
       <div class="card"><div class="muted">Challenges</div><div id="challengeCount"></div></div>
       <div class="card"><div class="muted">Runs/Challenge</div><div id="runs"></div></div>
     </div>
-    <table id="tbl"></table>
+    <div class="tableWrap"><table id="tbl"></table></div>
   </main>
   <script>
     const SUMMARY = ${json};
@@ -175,7 +224,7 @@ function renderHtml(summary: any): string {
     const tbl = document.getElementById('tbl');
     const head = document.createElement('thead');
     const hr = document.createElement('tr');
-    const cols = ['Model', 'Score', 'Tokens'].concat(SUMMARY.challenges.map(c => c.id));
+    const cols = ['Model', 'Score', 'FirstTry%', 'Tokens'].concat(SUMMARY.challenges.map(c => c.id));
     for (const c of cols) {
       const th = document.createElement('th');
       th.textContent = c;
@@ -189,7 +238,8 @@ function renderHtml(summary: any): string {
     for (const m of models) {
       const tr = document.createElement('tr');
       const td0 = document.createElement('td');
-      td0.innerHTML = '<div>' + m.name + '</div><div class="muted">' + m.id + '</div>';
+      td0.className = 'modelCell';
+      td0.innerHTML = '<div class="cellTop">' + m.name + '</div><div class="muted cellSub">' + m.id + '</div>';
       tr.appendChild(td0);
 
       const td1 = document.createElement('td');
@@ -197,8 +247,13 @@ function renderHtml(summary: any): string {
       tr.appendChild(td1);
 
       const td2 = document.createElement('td');
-      td2.textContent = String(m.totalTokens || 0);
+      td2.innerHTML = '<div class="cellTop"><span class="pill">' + (m.firstTryRate * 100).toFixed(0) + '%</span></div>' +
+        '<div class="muted cellSub">avg a ' + (m.avgAttemptsOnPass || 0).toFixed(2) + '</div>';
       tr.appendChild(td2);
+
+      const td3 = document.createElement('td');
+      td3.textContent = String(m.totalTokens || 0);
+      tr.appendChild(td3);
 
       for (const c of SUMMARY.challenges) {
         const r = m.challenges[c.id];
@@ -206,8 +261,14 @@ function renderHtml(summary: any): string {
         const pct = (r.passRate * 100).toFixed(0);
         const ok = r.passRate >= 0.999;
         const cls = ok ? 'good' : (r.passRate === 0 ? 'bad' : '');
-        td.innerHTML = '<div class="' + cls + '">' + pct + '%</div>' +
-          '<div class="muted">' + r.passes + '/' + r.completedRuns + ' (sd ' + r.stddev.toFixed(2) + ')</div>';
+
+        const h = r.attemptHistogram || {};
+        const a1 = h['1'] || 0;
+        const a2 = h['2'] || 0;
+        const a3 = h['3'] || 0;
+        const fail = r.failCount || 0;
+        td.innerHTML = '<div class="cellTop ' + cls + '">' + pct + '%</div>' +
+          '<div class="muted cellSub">' + r.passes + '/' + r.completedRuns + ' sd ' + r.stddev.toFixed(2) + ' | a1 ' + a1 + ' a2 ' + a2 + ' a3 ' + a3 + ' f ' + fail + '</div>';
         tr.appendChild(td);
       }
       body.appendChild(tr);

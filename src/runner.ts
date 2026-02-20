@@ -184,6 +184,7 @@ async function runOneJob(opts: {
   let totalPromptTokens = 0;
   let totalCompletionTokens = 0;
   let totalTokens = 0;
+  let totalCostUsd = 0;
 
   for (let attempt = 1; attempt <= opts.attempts; attempt++) {
     const attemptDir = path.join(dir, `attempt-${attempt}`);
@@ -192,12 +193,13 @@ async function runOneJob(opts: {
     if (await fileExists(attemptMetaPath)) {
       const meta = (await readJson(attemptMetaPath)) as {
         passed?: boolean;
-        usage?: { promptTokens?: number; completionTokens?: number; totalTokens?: number };
+        usage?: { promptTokens?: number; completionTokens?: number; totalTokens?: number; costUsd?: number };
       };
       if (meta?.usage) {
         totalPromptTokens += meta.usage.promptTokens ?? 0;
         totalCompletionTokens += meta.usage.completionTokens ?? 0;
         totalTokens += meta.usage.totalTokens ?? 0;
+        totalCostUsd += meta.usage.costUsd ?? 0;
       }
       if (meta?.passed === true) {
         await finalizeResult({
@@ -209,7 +211,7 @@ async function runOneJob(opts: {
           finishedAt: new Date().toISOString(),
           passed: true,
           attemptsUsed: attempt,
-          usage: { totalPromptTokens, totalCompletionTokens, totalTokens }
+          usage: { totalPromptTokens, totalCompletionTokens, totalTokens, totalCostUsd }
         });
         return { status: "done", passed: true, attemptsUsed: attempt };
       }
@@ -278,16 +280,18 @@ async function runOneJob(opts: {
     const promptTokens = usage.prompt_tokens ?? 0;
     const completionTokens = usage.completion_tokens ?? 0;
     const total = usage.total_tokens ?? promptTokens + completionTokens;
+    const costUsd = typeof (usage as any).cost === "number" ? (usage as any).cost : 0;
     totalPromptTokens += promptTokens;
     totalCompletionTokens += completionTokens;
     totalTokens += total;
+    totalCostUsd += costUsd;
 
     await writeJsonAtomic(attemptMetaPath, {
       attempt,
       startedAt: attemptStartedAt,
       finishedAt: new Date().toISOString(),
       passed,
-      usage: { promptTokens, completionTokens, totalTokens: total },
+      usage: { promptTokens, completionTokens, totalTokens: total, costUsd },
       openrouterHeaders: headers
     });
 
@@ -301,7 +305,7 @@ async function runOneJob(opts: {
         finishedAt: new Date().toISOString(),
         passed: true,
         attemptsUsed: attempt,
-        usage: { totalPromptTokens, totalCompletionTokens, totalTokens }
+        usage: { totalPromptTokens, totalCompletionTokens, totalTokens, totalCostUsd }
       });
       return { status: "done", passed: true, attemptsUsed: attempt };
     }
@@ -316,7 +320,7 @@ async function runOneJob(opts: {
     finishedAt: new Date().toISOString(),
     passed: false,
     attemptsUsed: opts.attempts,
-    usage: { totalPromptTokens, totalCompletionTokens, totalTokens }
+    usage: { totalPromptTokens, totalCompletionTokens, totalTokens, totalCostUsd }
   });
 
   return { status: "done", passed: false, attemptsUsed: opts.attempts };
@@ -385,7 +389,7 @@ async function finalizeResult(opts: {
   finishedAt: string;
   passed: boolean;
   attemptsUsed: number;
-  usage: { totalPromptTokens: number; totalCompletionTokens: number; totalTokens: number };
+  usage: { totalPromptTokens: number; totalCompletionTokens: number; totalTokens: number; totalCostUsd?: number };
 }): Promise<void> {
   await writeJsonAtomic(opts.resultPath, {
     modelId: opts.modelId,

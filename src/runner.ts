@@ -9,6 +9,7 @@ import {
   writeJsonAtomic
 } from "./fs_util.ts";
 import { callOpenRouterChat, extractAssistantContent } from "./openrouter.ts";
+import { OpenRouterHttpError } from "./openrouter.ts";
 import {
   extractFirstCodeBlock,
   generateGleamTestFile,
@@ -56,6 +57,7 @@ export async function runSuite(opts: {
   await ensureDir(opts.artifactsDir);
   const concurrency = Math.max(1, runCfg.concurrency);
   let nextIndex = 0;
+  let abortReason: string | null = null;
 
   const smallRun = jobs.length <= 50;
   let completed = 0;
@@ -68,6 +70,7 @@ export async function runSuite(opts: {
 
   const workers = Array.from({ length: concurrency }, async () => {
     while (true) {
+      if (abortReason) return;
       const idx = nextIndex++;
       if (idx >= jobs.length) return;
       const job = jobs[idx];
@@ -97,6 +100,10 @@ export async function runSuite(opts: {
           console.log(`Progress ${completed}/${jobs.length} (pass ${passed}, fail ${failed}, skip ${skipped}, err ${errored})`);
         }
       } catch (err) {
+        if (err instanceof OpenRouterHttpError && err.isFatal) {
+          abortReason = err.message;
+        }
+
         const dir = jobDir(opts.artifactsDir, job.model.id, job.challenge.id, job.runIndex);
         await ensureDir(dir);
         await writeJsonAtomic(path.join(dir, "job_error.json"), {
@@ -104,7 +111,10 @@ export async function runSuite(opts: {
           challengeId: job.challenge.id,
           runIndex: job.runIndex,
           error: {
-            message: err instanceof Error ? err.message : String(err)
+            message: err instanceof Error ? err.message : String(err),
+            kind: err instanceof OpenRouterHttpError ? err.kind : "unknown",
+            status: err instanceof OpenRouterHttpError ? err.status : null,
+            fatal: err instanceof OpenRouterHttpError ? err.isFatal : false
           },
           at: new Date().toISOString()
         });
@@ -117,6 +127,15 @@ export async function runSuite(opts: {
               err instanceof Error ? err.message : String(err)
             }`
           );
+          if (abortReason) {
+            console.log(`Aborting early: ${abortReason}`);
+            return;
+          }
+        }
+
+        if (!smallRun && abortReason) {
+          console.log(`Aborting early: ${abortReason}`);
+          return;
         }
       }
     }

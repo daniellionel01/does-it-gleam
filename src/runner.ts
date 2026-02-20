@@ -273,12 +273,21 @@ export async function runSuite(opts: {
         if (outcome.status === "done") {
           if (outcome.passed) passed++;
           else failed++;
+        } else if (outcome.status === "skipped" && typeof outcome.passed === "boolean") {
+          if (outcome.passed) passed++;
+          else failed++;
         }
 
         workerStates[workerId] = { status: "idle" };
 
         if (smallRun) {
-          const tail = outcome.status === "done" ? ` ${outcome.passed ? "PASS" : "FAIL"} (attempts ${outcome.attemptsUsed})` : " SKIP";
+          let tail = "";
+          if (outcome.status === "done") {
+            tail = ` ${outcome.passed ? "PASS" : "FAIL"} (attempts ${outcome.attemptsUsed})`;
+          } else {
+            const cached = typeof outcome.passed === "boolean" ? `cached ${outcome.passed ? "PASS" : "FAIL"}` : "cached";
+            tail = ` SKIP (${cached})`;
+          }
           console.log(`[${completed}/${jobs.length}] ${job.model.id} ${job.challenge.id} run-${job.runIndex}${tail}`);
         } else if (completed % 25 === 0 || completed === jobs.length) {
           clearLine();
@@ -386,13 +395,13 @@ async function runOneJob(opts: {
   if (await fileExists(resultPath)) {
     // Backward-compat: earlier versions could write an incomplete result with missing fields.
     try {
-      const r = (await readJson(resultPath)) as { attemptsUsed?: number };
+      const r = (await readJson(resultPath)) as { attemptsUsed?: number; passed?: boolean };
       if (typeof r.attemptsUsed !== "number") {
         const renamed = path.join(dir, `result.invalid-${Date.now()}.json`);
         await Bun.write(renamed, await Bun.file(resultPath).text());
         // Keep the original file for now (non-destructive) and proceed to rerun.
       } else {
-        return { status: "skipped" };
+        return { status: "skipped", passed: Boolean(r.passed), attemptsUsed: r.attemptsUsed };
       }
     } catch {
       return { status: "skipped" };
